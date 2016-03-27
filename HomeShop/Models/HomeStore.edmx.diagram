@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3da6cfd035b7451895f9bd8862315a77" Name="Diagram1">
+        <EntityTypeShape EntityType="HomeStoreModel.Category" Width="1.5" PointX="0.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeStoreModel.CustomerOrder" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeStoreModel.OrderCart" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeStoreModel.Product" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeStoreModel.Receiving" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HomeStoreModel.ShippingType" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="HomeStoreModel.fk_CategoryID" ManuallyRouted="false" />
+        <AssociationConnector Association="HomeStoreModel.fk_CartOrderID" ManuallyRouted="false" />
+        <AssociationConnector Association="HomeStoreModel.fk_OrderShippingID" ManuallyRouted="false" />
+        <AssociationConnector Association="HomeStoreModel.fk_CartProductID" ManuallyRouted="false" />
+        <AssociationConnector Association="HomeStoreModel.fk_RecProductID" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
