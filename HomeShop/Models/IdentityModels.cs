@@ -9,6 +9,17 @@ namespace HomeShop.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set;  }
+        public string BillingAddress { get; set; }
+        public string BillingCity { get; set; }
+        public string BillingState { get; set;  }
+        public string BillingZip { get; set; }
+        public string ShippingAddress { get; set; }
+        public string ShippingCity { get; set; }
+        public string ShippingState { get; set; }
+        public string ShippingZip { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
