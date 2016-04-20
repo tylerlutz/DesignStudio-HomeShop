@@ -200,6 +200,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -227,9 +228,6 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\OrderCart.cs">
-      <DependentUpon>HomeStore.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>HomeStore.tt</DependentUpon>
     </Compile>
@@ -237,6 +235,9 @@
       <DependentUpon>HomeStore.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ShippingType.cs">
+      <DependentUpon>HomeStore.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ShoppingCartItem.cs">
       <DependentUpon>HomeStore.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -325,6 +326,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ShoppingCart\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

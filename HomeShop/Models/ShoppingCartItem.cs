@@ -12,12 +12,13 @@ namespace HomeShop.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderCart
+    public partial class ShoppingCartItem
     {
         public int CartID { get; set; }
         public Nullable<int> OrderID { get; set; }
         public Nullable<int> ProductID { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<decimal> Price { get; set; }
     
         public virtual CustomerOrder CustomerOrder { get; set; }
         public virtual Product Product { get; set; }
