@@ -13,10 +13,19 @@
     </ul>
     }
 }
+
+
 else
 {
+
+
+
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+        <a href="@Url.Action("ShoppingCart", new { id = "ShoppingCart" })">
+            <i class="glyphicon glyphicon-shopping-cart"></i>
+            <span class="sr-only">login</span>
+        </a>
+        </ul>
 }

@@ -22,3 +22,10 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+.glyphicon {
+        font-size: 30px;
+        padding-top: 19.5px;
+        padding-bottom: 19.5px;
+    }
