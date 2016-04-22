@@ -22,3 +22,6 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#success_message{ display: none;}
+
