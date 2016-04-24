@@ -13,8 +13,19 @@ namespace HomeShop.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        private int? OrderID;
         private HomeStoreEntities db = new HomeStoreEntities();
+
+        public ActionResult ShoppingCart()
+        {
+            if(TempData["orderid"] == null)
+            {
+                return View("EmptyCart");
+            } else
+            {
+                var items = db.CustomerOrders.Where(i => i.OrderID == (int)(TempData["orderid"]));
+                return View(items.ToList());
+            }
+        }
 
         public ActionResult Checkout(int orderID)
         {
@@ -90,9 +101,9 @@ namespace HomeShop.Controllers
             ShoppingCartItem cartItem = new ShoppingCartItem();
             bool success = false;
             product = db.Products.Find(productID);
-            if (OrderID == null)
+            if (TempData["orderid"] == null)
             {
-                OrderID = GenerateNewOrder().OrderID;
+                int OrderID = GenerateNewOrder().OrderID;
 
                 cartItem.OrderID = OrderID;
                 cartItem.ProductID = product.ProductID;
@@ -102,10 +113,11 @@ namespace HomeShop.Controllers
                 db.ShoppingCartItems.Add(cartItem);
                 db.SaveChanges();
                 success = true;
+                TempData["orderid"] = OrderID;
             }
             else
             {
-                cartItem.OrderID = OrderID;
+                cartItem.OrderID = (int)(TempData["orderid"]);
                 cartItem.ProductID = product.ProductID;
                 cartItem.Quantity = quantity;
                 cartItem.Price = product.Price * quantity;
