@@ -33,5 +33,14 @@ namespace HomeShop.Controllers
 
             return View();
         }
+        public ActionResult Shop()
+        {
+            ViewBag.Message = "Shop Here";
+
+            return View();
+        }
+
+
+
     }
 }
