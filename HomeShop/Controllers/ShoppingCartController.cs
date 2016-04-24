@@ -13,11 +13,25 @@ namespace HomeShop.Controllers
         private int? OrderID;
         private HomeStoreEntities db = new HomeStoreEntities();
 
+        public ActionResult Checkout(int orderID)
+        {
+            var items = db.ShoppingCartItems.Where(i => i.OrderID == orderID);
+
+            double totalCost;
+
+            foreach(var item in items)
+            {
+
+            }
+
+            return View();
+        }
+
         public ActionResult AddItem(int productID, int quantity)
         {
             Product product = new Product();
             ShoppingCartItem cartItem = new ShoppingCartItem();
-            Boolean success = false;
+            bool success = false;
             product = db.Products.Find(productID);
             if (OrderID == null)
             {
@@ -54,7 +68,23 @@ namespace HomeShop.Controllers
             }
         }
 
-        public CustomerOrder GenerateNewOrder()
+        public ActionResult DeleteFromCart(int productID, int orderID)
+        {
+
+            var items = db.ShoppingCartItems.Where(i => i.OrderID == orderID);
+
+            foreach(var item in items)
+            {
+                if(item.ProductID == productID)
+                {
+                    db.ShoppingCartItems.Remove(item);
+                }
+            }
+            
+            return View("~/Views/ShoppingCart/Cart");
+        }
+
+        private CustomerOrder GenerateNewOrder()
         {
             CustomerOrder newOrder = new CustomerOrder();
             newOrder.CustomerID = User.Identity.GetUserId();
