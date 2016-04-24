@@ -15,16 +15,32 @@ namespace HomeShop.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "this is homestore.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "find us, meet us, greet us";
 
             return View();
         }
+
+        public ActionResult ShoppingCart()
+        {
+            ViewBag.Message = "our shopping cart";
+
+            return View();
+        }
+        public ActionResult Shop()
+        {
+            ViewBag.Message = "Shop Here";
+
+            return View();
+        }
+
+
+
     }
 }
