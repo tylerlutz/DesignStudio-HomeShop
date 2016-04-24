@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using HomeShop.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
+using Stripe;
 
 namespace HomeShop.Controllers
 {
@@ -15,16 +18,70 @@ namespace HomeShop.Controllers
 
         public ActionResult Checkout(int orderID)
         {
+            TempData["orderid"] = orderID;
             var items = db.ShoppingCartItems.Where(i => i.OrderID == orderID);
 
-            double totalCost;
+            decimal? totalCost = 0;
 
             foreach(var item in items)
             {
-
+                totalCost += item.Price * item.Quantity;
             }
 
-            return View();
+            CustomerOrder order = db.CustomerOrders.Find(orderID);
+            order.TotalCost = totalCost;
+            db.SaveChanges();
+
+            return View(order);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult>Checkout(CustomerOrder model, int shippingID)
+        {
+            decimal? newTotalCost = 0;
+            decimal? shippingCost = 0;
+
+            ShippingType shippingType = db.ShippingTypes.Find(shippingID);
+
+            shippingCost = shippingType.ShippingCost;
+            newTotalCost = model.TotalCost + shippingCost;
+            model.TotalCost = newTotalCost;
+
+            var chargeID = await ProcessPayment(model);
+
+            CustomerOrder order = db.CustomerOrders.Find((int)TempData["orderid"]);
+            order.TransactionID = chargeID;
+            order.TotalCost = model.TotalCost;
+            order.ShippingID = model.ShippingID;
+
+            db.SaveChanges();
+
+            return View("PaymentSuccessful");    
+        }
+
+        private async Task<string> ProcessPayment(CustomerOrder model)
+        {
+            var manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
+            var currentUser = manager.FindById(User.Identity.GetUserId());
+            string userEmail = currentUser.Email;
+
+            return await Task.Run(() =>
+            {
+                var myCharge = new StripeChargeCreateOptions
+                {
+                    Amount = (int)(model.TotalCost * 100),
+                    Currency = "usd",
+                    Description = "Order Number: " + model.OrderID.ToString(),
+                    ReceiptEmail = userEmail,
+                    Source = new StripeSourceOptions
+                    {
+                        TokenId = model.Token
+                    }
+                };
+                var chargeService = new StripeChargeService("sk_test_Vj4vnMHdXkmwYAB4nvO0R6ng");
+                var stripeCharge = chargeService.Create(myCharge);
+                return stripeCharge.Id;
+            });      
         }
 
         public ActionResult AddItem(int productID, int quantity)
