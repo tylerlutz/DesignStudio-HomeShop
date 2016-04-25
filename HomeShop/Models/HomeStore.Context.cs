@@ -27,9 +27,9 @@ namespace HomeShop.Models
     
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<CustomerOrder> CustomerOrders { get; set; }
-        public virtual DbSet<OrderCart> OrderCarts { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Receiving> Receivings { get; set; }
         public virtual DbSet<ShippingType> ShippingTypes { get; set; }
+        public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

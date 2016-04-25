@@ -17,7 +17,7 @@ namespace HomeShop.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.OrderCarts = new HashSet<OrderCart>();
+            this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
             this.Receivings = new HashSet<Receiving>();
         }
     
@@ -26,10 +26,11 @@ namespace HomeShop.Models
         public string ProductDesc { get; set; }
         public Nullable<int> CategoryID { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<decimal> Price { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderCart> OrderCarts { get; set; }
+        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Receiving> Receivings { get; set; }
     }

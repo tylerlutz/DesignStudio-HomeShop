@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HomeStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="HomeStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -23,15 +23,6 @@
           <Property Name="ShippingID" Type="int" />
           <Property Name="TransactionID" Type="varchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="OrderCart">
-          <Key>
-            <PropertyRef Name="CartID" />
-          </Key>
-          <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OrderID" Type="int" />
-          <Property Name="ProductID" Type="int" />
-          <Property Name="Quantity" Type="int" />
-        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
@@ -41,6 +32,7 @@
           <Property Name="ProductDesc" Type="nvarchar(max)" />
           <Property Name="CategoryID" Type="int" />
           <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="money" />
         </EntityType>
         <EntityType Name="Receiving">
           <Key>
@@ -59,26 +51,36 @@
           <Property Name="ShippingName" Type="varchar" MaxLength="255" />
           <Property Name="ShippingCost" Type="money" />
         </EntityType>
+        <EntityType Name="ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="CartID" />
+          </Key>
+          <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
         <Association Name="fk_CartOrderID">
           <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="0..1" />
-          <End Role="OrderCart" Type="Self.OrderCart" Multiplicity="*" />
+          <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CustomerOrder">
               <PropertyRef Name="OrderID" />
             </Principal>
-            <Dependent Role="OrderCart">
+            <Dependent Role="ShoppingCartItem">
               <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_CartProductID">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="OrderCart" Type="Self.OrderCart" Multiplicity="*" />
+          <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="OrderCart">
+            <Dependent Role="ShoppingCartItem">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -122,17 +124,17 @@
         <EntityContainer Name="HomeStoreModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerOrder" EntityType="Self.CustomerOrder" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OrderCart" EntityType="Self.OrderCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receiving" EntityType="Self.Receiving" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingTypes" EntityType="Self.ShippingTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCartItem" EntityType="Self.ShoppingCartItem" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_CartOrderID" Association="Self.fk_CartOrderID">
             <End Role="CustomerOrder" EntitySet="CustomerOrder" />
-            <End Role="OrderCart" EntitySet="OrderCart" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItem" />
           </AssociationSet>
           <AssociationSet Name="fk_CartProductID" Association="Self.fk_CartProductID">
             <End Role="Product" EntitySet="Product" />
-            <End Role="OrderCart" EntitySet="OrderCart" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItem" />
           </AssociationSet>
           <AssociationSet Name="fk_CategoryID" Association="Self.fk_CategoryID">
             <End Role="Categories" EntitySet="Categories" />
@@ -170,19 +172,8 @@
           <Property Name="TotalCost" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ShippingID" Type="Int32" />
           <Property Name="TransactionID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="OrderCarts" Relationship="Self.fk_CartOrderID" FromRole="CustomerOrder" ToRole="OrderCart" />
+          <NavigationProperty Name="ShoppingCartItems" Relationship="Self.fk_CartOrderID" FromRole="CustomerOrder" ToRole="ShoppingCartItem" />
           <NavigationProperty Name="ShippingType" Relationship="Self.fk_OrderShippingID" FromRole="CustomerOrder" ToRole="ShippingTypes" />
-        </EntityType>
-        <EntityType Name="OrderCart">
-          <Key>
-            <PropertyRef Name="CartID" />
-          </Key>
-          <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderID" Type="Int32" />
-          <Property Name="ProductID" Type="Int32" />
-          <Property Name="Quantity" Type="Int32" />
-          <NavigationProperty Name="CustomerOrder" Relationship="Self.fk_CartOrderID" FromRole="OrderCart" ToRole="CustomerOrder" />
-          <NavigationProperty Name="Product" Relationship="Self.fk_CartProductID" FromRole="OrderCart" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -193,8 +184,9 @@
           <Property Name="ProductDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CategoryID" Type="Int32" />
           <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="Category" Relationship="Self.fk_CategoryID" FromRole="Product" ToRole="Categories" />
-          <NavigationProperty Name="OrderCarts" Relationship="Self.fk_CartProductID" FromRole="Product" ToRole="OrderCart" />
+          <NavigationProperty Name="ShoppingCartItems" Relationship="Self.fk_CartProductID" FromRole="Product" ToRole="ShoppingCartItem" />
           <NavigationProperty Name="Receivings" Relationship="Self.fk_RecProductID" FromRole="Product" ToRole="Receiving" />
         </EntityType>
         <EntityType Name="Receiving">
@@ -216,6 +208,18 @@
           <Property Name="ShippingCost" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="CustomerOrders" Relationship="Self.fk_OrderShippingID" FromRole="ShippingTypes" ToRole="CustomerOrder" />
         </EntityType>
+        <EntityType Name="ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="CartID" />
+          </Key>
+          <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="CustomerOrder" Relationship="Self.fk_CartOrderID" FromRole="ShoppingCartItem" ToRole="CustomerOrder" />
+          <NavigationProperty Name="Product" Relationship="Self.fk_CartProductID" FromRole="ShoppingCartItem" ToRole="Product" />
+        </EntityType>
         <Association Name="fk_CategoryID">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -230,12 +234,12 @@
         </Association>
         <Association Name="fk_CartOrderID">
           <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="0..1" />
-          <End Role="OrderCart" Type="Self.OrderCart" Multiplicity="*" />
+          <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CustomerOrder">
               <PropertyRef Name="OrderID" />
             </Principal>
-            <Dependent Role="OrderCart">
+            <Dependent Role="ShoppingCartItem">
               <PropertyRef Name="OrderID" />
             </Dependent>
           </ReferentialConstraint>
@@ -254,12 +258,12 @@
         </Association>
         <Association Name="fk_CartProductID">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="OrderCart" Type="Self.OrderCart" Multiplicity="*" />
+          <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="OrderCart">
+            <Dependent Role="ShoppingCartItem">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -279,17 +283,17 @@
         <EntityContainer Name="HomeStoreEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="CustomerOrders" EntityType="Self.CustomerOrder" />
-          <EntitySet Name="OrderCarts" EntityType="Self.OrderCart" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Receivings" EntityType="Self.Receiving" />
           <EntitySet Name="ShippingTypes" EntityType="Self.ShippingType" />
+          <EntitySet Name="ShoppingCartItems" EntityType="Self.ShoppingCartItem" />
           <AssociationSet Name="fk_CategoryID" Association="Self.fk_CategoryID">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="fk_CartOrderID" Association="Self.fk_CartOrderID">
             <End Role="CustomerOrder" EntitySet="CustomerOrders" />
-            <End Role="OrderCart" EntitySet="OrderCarts" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
           </AssociationSet>
           <AssociationSet Name="fk_OrderShippingID" Association="Self.fk_OrderShippingID">
             <End Role="ShippingTypes" EntitySet="ShippingTypes" />
@@ -297,7 +301,7 @@
           </AssociationSet>
           <AssociationSet Name="fk_CartProductID" Association="Self.fk_CartProductID">
             <End Role="Product" EntitySet="Products" />
-            <End Role="OrderCart" EntitySet="OrderCarts" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
           </AssociationSet>
           <AssociationSet Name="fk_RecProductID" Association="Self.fk_RecProductID">
             <End Role="Product" EntitySet="Products" />
@@ -330,16 +334,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OrderCarts">
-            <EntityTypeMapping TypeName="HomeStoreModel.OrderCart">
-              <MappingFragment StoreEntitySet="OrderCart">
-                <ScalarProperty Name="CartID" ColumnName="CartID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="HomeStoreModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -348,6 +342,7 @@
                 <ScalarProperty Name="ProductDesc" ColumnName="ProductDesc" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -367,6 +362,17 @@
                 <ScalarProperty Name="ShippingID" ColumnName="ShippingID" />
                 <ScalarProperty Name="ShippingName" ColumnName="ShippingName" />
                 <ScalarProperty Name="ShippingCost" ColumnName="ShippingCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCartItems">
+            <EntityTypeMapping TypeName="HomeStoreModel.ShoppingCartItem">
+              <MappingFragment StoreEntitySet="ShoppingCartItem">
+                <ScalarProperty Name="CartID" ColumnName="CartID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
