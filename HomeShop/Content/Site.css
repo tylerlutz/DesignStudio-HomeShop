@@ -22,15 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
-
-<<<<<<< HEAD
 #success_message{ display: none;}
 
-=======
 
 .glyphicon {
         font-size: 30px;
         padding-top: 19.5px;
         padding-bottom: 19.5px;
     }
->>>>>>> ff0713d7a9b827f813403c99b7a46308ae99ca77
+
