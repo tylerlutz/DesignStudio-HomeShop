@@ -19,12 +19,24 @@ namespace HomeShop.Controllers
         {
             if (TempData["orderid"] == null)
             {
-                return View("EmptyCart");
+                CustomerOrder order = GenerateNewOrder();
+                TempData["orderid"] = order.OrderID;
+                return RedirectToAction("Index","Home");
             }
             else
             {
-                var items = db.CustomerOrders.Where(i => i.OrderID == (int)(TempData["orderid"]));
-                return View(items.ToList());
+                ShoppingCartViewModel model = new ShoppingCartViewModel();
+
+                var items = db.ShoppingCartItems.Where(i => i.OrderID == (int)(TempData["orderid"]));
+                foreach(ShoppingCartItem item in items)
+                {
+                    model.CartItems.Add(item);
+                    model.TotalCost += item.Price * item.Quantity;
+                }
+
+                model.OrderID = (int)(TempData["orderid"]);
+
+                return View(model);
             }
         }
 

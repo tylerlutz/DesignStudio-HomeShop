@@ -1,4 +1,4 @@
-﻿
+﻿@model HomeShop.Models.ShoppingCartViewModel
 @{
     ViewBag.Title = "Your Shopping Cart!";
 }
@@ -25,11 +25,9 @@
 
         <ol class="breadcrumb">
 
-            <li><a href="#">Review</a></li>
-
             <li class="active"><a href="#">Order</a></li>
 
-            <li><a href="#">Payment</a></li>
+            <li><a href="#">Checkout</a></li>
 
         </ol>
 
@@ -38,38 +36,26 @@
         <div class="col-md-7 col-sm-12 text-left">
 
             <ul>
+                @foreach (var item in Model.CartItems)
+                {
+                    <li class="row list-inline columnCaptions">
 
-                <li class="row list-inline columnCaptions">
+                        <span>@item.Quantity</span>
 
-                    <span>QTY</span>
+                        <span>@item.Product.ProductName</span>
 
-                    <span>ITEM</span>
+                        <span>@item.Price</span>
 
-                    <span>Price</span>
-
-                </li>
-
-                <li class="row">
-
-                    <span class="quantity"></span>
-
-                    <span class="itemName"></span>
-
-                    <span class="popbtn"><a class="arrow"></a></span>
-
-                    <span class="price"></span>
-
-                </li>
-
-
-
+                    </li>
+                }
+                
                 <li class="row totals">
 
                     <span class="itemName">Total:</span>
 
-                    <span class="price"></span>
+                    <span class="price">@Model.TotalCost</span>
 
-                    <span class="order"> <a class="text-center">ORDER</a></span>
+                    <span class="order"> <a class="text-center">Checkout</a></span>
 
                 </li>
 
