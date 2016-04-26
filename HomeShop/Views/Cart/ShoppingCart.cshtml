@@ -1,0 +1,89 @@
+﻿@model HomeShop.Models.ShoppingCartViewModel
+@{
+    ViewBag.Title = "Your Shopping Cart!";
+}
+<h2>@ViewBag.Title</h2>
+
+<h4>You've got some great stuff there! Order away!</h4>
+
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/Content/ShoppingCart.css" />
+
+</head>
+
+<body>
+
+    <div class="container-fluid breadcrumbBox text-center">
+
+        <ol class="breadcrumb">
+
+            <li class="active"><a href="#">Order</a></li>
+
+            <li><a href="#">Checkout</a></li>
+
+        </ol>
+
+    </div>
+
+        <div class="col-md-7 col-sm-12 text-left">
+
+            <ul>
+                @foreach (var item in Model.CartItems)
+                {
+                    <li class="row list-inline columnCaptions">
+
+                        <span>@item.Quantity</span>
+
+                        <span>@item.Product.ProductName</span>
+
+                        <span>@item.Price</span>
+
+                    </li>
+                }
+                
+                <li class="row totals">
+
+                    <span class="itemName">Total:</span>
+
+                    <span class="price">@Model.TotalCost</span>
+
+                    <span class="order"> <a class="text-center">Checkout</a></span>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+    <!-- The popover content -->
+
+    <div id="popover" style="display: none">
+
+        <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+
+        <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+
+    </div>
+
+
+
+    <!-- JavaScript includes -->
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/shoppingcart.js"></script>
+
+</body>
+
+</html>

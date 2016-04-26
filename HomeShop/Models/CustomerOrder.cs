@@ -29,5 +29,7 @@ namespace HomeShop.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
         public virtual ShippingType ShippingType { get; set; }
+
+        public string Token { get; set; }
     }
 }
