@@ -26,14 +26,18 @@ namespace HomeShop.Controllers
             else
             {
                 ShoppingCartViewModel model = new ShoppingCartViewModel();
+                decimal? total = 0;
 
-                var items = db.ShoppingCartItems.Where(i => i.OrderID == (int)(TempData["orderid"]));
-                foreach(ShoppingCartItem item in items)
+                int id = (int)(TempData["orderid"]);
+
+                var items = db.ShoppingCartItems.Where(i => i.OrderID == id );
+                model.CartItems = items.ToList();
+                foreach(var item in items)
                 {
-                    model.CartItems.Add(item);
-                    model.TotalCost += item.Price * item.Quantity;
+                    total += item.Price * item.Quantity;
                 }
 
+                model.TotalCost = total;
                 model.OrderID = (int)(TempData["orderid"]);
 
                 return View(model);
@@ -108,7 +112,7 @@ namespace HomeShop.Controllers
             });
         }
 
-        public ActionResult AddItem(int productID, int quantity)
+        public ActionResult AddItem(int? productID, int quantity)
         {
             Product product = new Product();
             ShoppingCartItem cartItem = new ShoppingCartItem();
@@ -142,7 +146,7 @@ namespace HomeShop.Controllers
 
             if (success)
             {
-                return View();
+                return RedirectToAction("ShoppingCart","Cart");
             }
             else
             {
