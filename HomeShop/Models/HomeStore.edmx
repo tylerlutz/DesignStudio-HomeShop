@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HomeStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HomeStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -33,6 +33,7 @@
           <Property Name="CategoryID" Type="int" />
           <Property Name="Quantity" Type="int" />
           <Property Name="Price" Type="money" />
+          <Property Name="ImageLocation" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Receiving">
           <Key>
@@ -149,8 +150,7 @@
             <End Role="Receiving" EntitySet="Receiving" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HomeStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -188,6 +188,7 @@
           <NavigationProperty Name="Category" Relationship="Self.fk_CategoryID" FromRole="Product" ToRole="Categories" />
           <NavigationProperty Name="ShoppingCartItems" Relationship="Self.fk_CartProductID" FromRole="Product" ToRole="ShoppingCartItem" />
           <NavigationProperty Name="Receivings" Relationship="Self.fk_RecProductID" FromRole="Product" ToRole="Receiving" />
+          <Property Name="ImageLocation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Receiving">
           <Key>
@@ -337,6 +338,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="HomeStoreModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ImageLocation" ColumnName="ImageLocation" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductDesc" ColumnName="ProductDesc" />
