@@ -34,5 +34,12 @@ namespace HomeShop.Controllers
 
             return View(products.ToList());
         }
+
+        public ActionResult Detail(int id)
+        {
+            Product product = db.Products.Find(id);
+
+            return View(product);
+        }
     }
 }
