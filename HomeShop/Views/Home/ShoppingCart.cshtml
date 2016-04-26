@@ -1,18 +1,103 @@
 ﻿
 @{
-    ViewBag.Title = "Shopping Cart";
+    ViewBag.Title = "Your Shopping Cart!";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<h2>@ViewBag.Title</h2>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<h4>You've got some great stuff there! Order away!</h4>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/Content/ShoppingCart.css" />
+
+</head>
+
+<body>
+
+    <div class="container-fluid breadcrumbBox text-center">
+
+        <ol class="breadcrumb">
+
+            <li><a href="#">Review</a></li>
+
+            <li class="active"><a href="#">Order</a></li>
+
+            <li><a href="#">Payment</a></li>
+
+        </ol>
+
+    </div>
+
+        <div class="col-md-7 col-sm-12 text-left">
+
+            <ul>
+
+                <li class="row list-inline columnCaptions">
+
+                    <span>QTY</span>
+
+                    <span>ITEM</span>
+
+                    <span>Price</span>
+
+                </li>
+
+                <li class="row">
+
+                    <span class="quantity"></span>
+
+                    <span class="itemName"></span>
+
+                    <span class="popbtn"><a class="arrow"></a></span>
+
+                    <span class="price"></span>
+
+                </li>
+
+
+
+                <li class="row totals">
+
+                    <span class="itemName">Total:</span>
+
+                    <span class="price"></span>
+
+                    <span class="order"> <a class="text-center">ORDER</a></span>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+    <!-- The popover content -->
+
+    <div id="popover" style="display: none">
+
+        <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+
+        <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+
+    </div>
+
+
+
+    <!-- JavaScript includes -->
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/shoppingcart.js"></script>
+
+</body>
+
+</html>
