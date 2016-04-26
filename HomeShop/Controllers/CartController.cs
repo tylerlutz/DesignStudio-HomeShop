@@ -8,6 +8,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
 using Stripe;
+using System.Data.Entity;
 
 namespace HomeShop.Controllers
 {
@@ -44,10 +45,10 @@ namespace HomeShop.Controllers
             }
         }
 
-        public ActionResult Checkout(int orderID)
+        public ActionResult Checkout(int id)
         {
-            TempData["orderid"] = orderID;
-            var items = db.ShoppingCartItems.Where(i => i.OrderID == orderID);
+            TempData["orderid"] = id;
+            var items = db.ShoppingCartItems.Where(i => i.OrderID == id);
 
             decimal? totalCost = 0;
 
@@ -56,20 +57,26 @@ namespace HomeShop.Controllers
                 totalCost += item.Price * item.Quantity;
             }
 
-            CustomerOrder order = db.CustomerOrders.Find(orderID);
+            CustomerOrder order = db.CustomerOrders.Find(id);
             order.TotalCost = totalCost;
+            db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
+            
+            ViewBag.ShippingID = new SelectList(db.ShippingTypes, "ShippingID", "ShippingName");
 
             return View(order);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Checkout(CustomerOrder model, int shippingID)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Checkout([Bind(Include ="OrderID, TotalCost, ShippingID, Token")] CustomerOrder model)
         {
             decimal? newTotalCost = 0;
             decimal? shippingCost = 0;
 
-            ShippingType shippingType = db.ShippingTypes.Find(shippingID);
+            int? id = (int)(TempData["orderid"]);
+            
+            ShippingType shippingType = db.ShippingTypes.Find(model.ShippingID);
 
             shippingCost = shippingType.ShippingCost;
             newTotalCost = model.TotalCost + shippingCost;
@@ -77,11 +84,11 @@ namespace HomeShop.Controllers
 
             var chargeID = await ProcessPayment(model);
 
-            CustomerOrder order = db.CustomerOrders.Find((int)TempData["orderid"]);
+            CustomerOrder order = db.CustomerOrders.Find(id);
             order.TransactionID = chargeID;
-            order.TotalCost = model.TotalCost;
             order.ShippingID = model.ShippingID;
 
+            db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
 
             return View("PaymentSuccessful");

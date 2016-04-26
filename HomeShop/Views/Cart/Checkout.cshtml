@@ -1,0 +1,114 @@
+﻿@model HomeShop.Models.CustomerOrder
+@{
+    ViewBag.Title = "Your Order Summary!";
+}
+<h2>@ViewBag.Title</h2>
+
+<h4>Here is your order summary!</h4>
+
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
+
+<link rel="stylesheet" type="text/css" href="~/Content/ShoppingCart.css" />
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<body>
+    @using (Html.BeginForm("Checkout", "Cart", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { role = "form", id = "frmCharge" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="container-fluid breadcrumbBox text-center">
+
+            <ol class="breadcrumb">
+
+                <li><a href="#">Order</a></li>
+
+                <li class="active"><a href="#">Checkout</a></li>
+
+            </ol>
+
+        </div>
+
+        <div class="col-md-7 col-sm-12 text-left">
+
+            <ul>
+                    <li class="row list-inline columnCaptions">
+                        @Html.DropDownList("ShippingID", null, htmlAttributes: new { @class = "form-control", @id = "shippingType" })
+                    </li>
+
+                <li class="row totals">
+
+                    <span class="itemName">Total:</span>
+
+                    <span class="price">@Model.TotalCost</span>
+
+                    <button class="btn btn-primary" id="stripeButton">Payment</button>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!-- The popover content -->
+
+        <div id="popover" style="display: none">
+
+            <a href="#"><span class="glyphicon glyphicon-pencil"></span></a>
+
+            <a href="#"><span class="glyphicon glyphicon-remove"></span></a>
+
+        </div>
+
+        @Html.HiddenFor(model => model.Token, new { @id = "hdnToken" })
+        @Html.HiddenFor(model => model.OrderID)
+        @Html.HiddenFor(model => model.TotalCost)
+
+    }
+
+
+    <!-- JavaScript includes -->
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/shoppingcart.js"></script>
+
+
+    @section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {           
+            var handler = StripeCheckout.configure({
+                key: 'pk_test_YZC1psyOUNsVkY8LoXRmWWQV',
+                locale: 'auto',
+                token: function (token) {
+                    var $form = $('#frmCharge');
+                    var response = token.id;
+                    $('#hdnToken').val(response);
+                    $('#frmCharge').get(0).submit();
+                }
+            });
+            $('#stripeButton').on('click', function (e) {
+                var amount;
+                handler.open({
+                    name: 'Home Store',
+                    description: 'Checkout - Home Store',
+                    amount: amount,
+                    billingAddress: true
+                });
+                e.preventDefault();
+            });
+        });
+    </script>
+    }
+
+</body>
+
+</html>
