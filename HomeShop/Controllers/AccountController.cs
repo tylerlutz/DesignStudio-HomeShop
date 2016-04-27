@@ -152,7 +152,9 @@ namespace HomeShop.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { FirstName = model.FirstName, LastName = model.LastName, PhoneNumber = model.PhoneNumber,
-                    UserName = model.Email, Email = model.Email };
+                    UserName = model.Email, Email = model.Email, BillingAddress = model.BillingAddress, BillingCity = model.BillingCity,
+                    BillingState = model.BillingState, BillingZip = model.BillingZip, ShippingAddress = model.ShippingAddress, ShippingCity = model.ShippingCity,
+                    ShippingState = model.ShippingState, ShippingZip = model.ShippingZip};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

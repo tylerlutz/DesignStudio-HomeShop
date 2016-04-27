@@ -92,6 +92,38 @@ namespace HomeShop.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Billing Address")]
+        public string BillingAddress { get; set; }
+
+        [Required]
+        [Display(Name= "Billing City")]
+        public string BillingCity { get; set; }
+
+        [Required]
+        [Display(Name = "Billing State")]
+        public string BillingState { get; set; }
+
+        [Required]
+        [Display(Name = "Billing Zip")]
+        public string BillingZip { get; set; }
+
+        [Required]
+        [Display(Name = "Shipping Address")]
+        public string ShippingAddress { get; set; }
+
+        [Required]
+        [Display(Name = "Shipping City")]
+        public string ShippingCity { get; set; }
+
+        [Required]
+        [Display(Name = "Shipping State")]
+        public string ShippingState { get; set; }
+
+        [Required]
+        [Display(Name = "Shipping Zip")]
+        public string ShippingZip { get; set; }
     }
 
     public class ResetPasswordViewModel
