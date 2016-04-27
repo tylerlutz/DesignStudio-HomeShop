@@ -38,9 +38,9 @@
         <div class="col-md-7 col-sm-12 text-left">
 
             <ul>
-                    <li class="row list-inline columnCaptions">
-                        @Html.DropDownList("ShippingID", null, htmlAttributes: new { @class = "form-control", @id = "shippingType" })
-                    </li>
+                <li class="row list-inline columnCaptions">
+                    @Html.DropDownList("ShippingID", null, htmlAttributes: new { @class = "form-control", @id = "shippingType" })
+                </li>
 
                 <li class="row totals">
 
@@ -83,8 +83,8 @@
 
 
     @section Scripts {
-    <script type="text/javascript">
-        $(document).ready(function () {           
+        <script type="text/javascript">
+        $(document).ready(function () {
             var handler = StripeCheckout.configure({
                 key: 'pk_test_YZC1psyOUNsVkY8LoXRmWWQV',
                 locale: 'auto',
@@ -106,7 +106,7 @@
                 e.preventDefault();
             });
         });
-    </script>
+        </script>
     }
 
 </body>

@@ -38,7 +38,7 @@
         <div class="row">
 
             <div class="col-md-3">
-                <p class="lead">Shop Name</p>
+                <p class="lead">HomeShop</p>
                 <div class="list-group">
                     @Html.ActionLink("Kitchen","Kitchen", "Product", new { @class = "list-group-item" })
                     @Html.ActionLink("Bedroom", "Bedroom", "Product", new { @class = "list-group-item" })
@@ -95,19 +95,6 @@
                         </div>
                     </div>
                     }
-                
-                        <div class="col-sm-4 col-lg-4 col-md-4">
-                            <div class="thumbnail">
-                                <img src="@item.ImageLocation" alt="">
-                                <div class="caption">
-                                    <h4 class="pull-right">@item.Price</h4>
-                                    <h4>
-                                        @Html.ActionLink(item.ProductName, "Detail", new { id = item.ProductID })
-                                    </h4>
-                                    <p>@item.ProductDesc</p>
-                                </div>
-                            </div>
-                        </div>
                     }
                 </div>
 

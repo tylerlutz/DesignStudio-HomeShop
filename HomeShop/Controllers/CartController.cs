@@ -22,7 +22,7 @@ namespace HomeShop.Controllers
             {
                 CustomerOrder order = GenerateNewOrder();
                 TempData["orderid"] = order.OrderID;
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
             else
             {
@@ -31,9 +31,9 @@ namespace HomeShop.Controllers
 
                 int id = (int)(TempData["orderid"]);
 
-                var items = db.ShoppingCartItems.Where(i => i.OrderID == id );
+                var items = db.ShoppingCartItems.Where(i => i.OrderID == id);
                 model.CartItems = items.ToList();
-                foreach(var item in items)
+                foreach (var item in items)
                 {
                     total += item.Price * item.Quantity;
                 }
@@ -61,7 +61,7 @@ namespace HomeShop.Controllers
             order.TotalCost = totalCost;
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
-            
+
             ViewBag.ShippingID = new SelectList(db.ShippingTypes, "ShippingID", "ShippingName");
 
             return View(order);
@@ -69,13 +69,13 @@ namespace HomeShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Checkout([Bind(Include ="OrderID, TotalCost, ShippingID, Token")] CustomerOrder model)
+        public async Task<ActionResult> Checkout([Bind(Include = "OrderID, TotalCost, ShippingID, Token")] CustomerOrder model)
         {
             decimal? newTotalCost = 0;
             decimal? shippingCost = 0;
 
             int? id = (int)(TempData["orderid"]);
-            
+
             ShippingType shippingType = db.ShippingTypes.Find(model.ShippingID);
 
             shippingCost = shippingType.ShippingCost;
@@ -153,7 +153,7 @@ namespace HomeShop.Controllers
 
             if (success)
             {
-                return RedirectToAction("ShoppingCart","Cart");
+                return RedirectToAction("ShoppingCart", "Cart");
             }
             else
             {
