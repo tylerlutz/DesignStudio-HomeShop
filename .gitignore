@@ -76,3 +76,4 @@ _[Ss]cripts
 
 # Visual Studio 2015 cache/options directory
 .vs/
+.vs/config/applicationhost.config
