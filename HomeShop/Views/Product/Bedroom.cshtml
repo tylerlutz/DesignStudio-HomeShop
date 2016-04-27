@@ -40,9 +40,9 @@
             <div class="col-md-3">
                 <p class="lead">HomeShop</p>
                 <div class="list-group">
-                    <a href="~/Views/Product/Kitchen.cshtml" class="list-group-item">Kitchen</a>
-                    <a href="~/Views/Product/Bedroom.cshtml" class="list-group-item">Bedroom</a>
-                    <a href="~/Views/Product/Bathroom.cshtml" class="list-group-item">Bathroom</a>
+                    @Html.ActionLink("Kitchen", "Kitchen", "Product", new { @class = "list-group-item" })
+                    @Html.ActionLink("Bedroom", "Bedroom", "Product", new { @class = "list-group-item" })
+                    @Html.ActionLink("Bathroom", "Bathroom", "Product", new { @class = "list-group-item" })
                 </div>
             </div>
 
