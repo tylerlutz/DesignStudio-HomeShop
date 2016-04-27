@@ -64,11 +64,11 @@
                             <div class="thumbnail">
                                 <img src="@item.ImageLocation" alt="">
                                 <div class="caption">
-                                    <h4 class="pull-right">@item.Price</h4>
-                                    <br />
                                     <h4>
                                         @Html.ActionLink(item.ProductName,"Detail",new { id = item.ProductID })
                                     </h4>
+                                    <br />
+                                    <h4 class="pull-right">@item.Price</h4>
                                     <p>@item.ProductDesc</p>
                                 </div>
                             </div>
