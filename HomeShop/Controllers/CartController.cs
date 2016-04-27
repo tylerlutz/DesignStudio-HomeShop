@@ -12,6 +12,7 @@ using System.Data.Entity;
 
 namespace HomeShop.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private HomeStoreEntities db = new HomeStoreEntities();

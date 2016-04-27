@@ -11,7 +11,7 @@ namespace HomeShop.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class ShippingType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +22,8 @@ namespace HomeShop.Models
     
         public int ShippingID { get; set; }
         public string ShippingName { get; set; }
+
+        [DataType(DataType.Currency)]
         public Nullable<decimal> ShippingCost { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -11,7 +11,7 @@ namespace HomeShop.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,6 +26,8 @@ namespace HomeShop.Models
         public string ProductDesc { get; set; }
         public Nullable<int> CategoryID { get; set; }
         public Nullable<int> Quantity { get; set; }
+
+        [DataType(DataType.Currency)]
         public Nullable<decimal> Price { get; set; }
         public string ImageLocation { get; set; }
     

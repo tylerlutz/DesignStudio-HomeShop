@@ -11,13 +11,15 @@ namespace HomeShop.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class ShoppingCartItem
     {
         public int CartID { get; set; }
         public Nullable<int> OrderID { get; set; }
         public Nullable<int> ProductID { get; set; }
         public Nullable<int> Quantity { get; set; }
+
+        [DataType(DataType.Currency)]
         public Nullable<decimal> Price { get; set; }
     
         public virtual CustomerOrder CustomerOrder { get; set; }
