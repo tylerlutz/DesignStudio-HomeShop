@@ -88,8 +88,6 @@
                                 <div class="caption">
                                     <h4 class="pull-right">@item.Price</h4>
                                     <h4>
-                                        <a href="#">@item.ProductName</a>
-
                                         @Html.ActionLink(item.ProductName, "Detail", new { id = item.ProductID })
                                     </h4>
                                     <p>@item.ProductDesc</p>
