@@ -42,7 +42,7 @@
 
                         <span>@item.Product.ProductName</span>
 
-                        <span>@item.Price</span>
+                        <span>@string.Format("{0:C2}", (decimal)(item.Price))</span>
 
                     </li>
                 }
@@ -51,7 +51,7 @@
 
                     <span class="itemName">Total:</span>
 
-                    <span class="price">@Model.TotalCost</span>
+                    <span class="price">@string.Format("{0:C2}", (decimal)(Model.TotalCost))</span>
 
                     <span class="order"> @Html.ActionLink("Checkout","Checkout",new { @id = Model.OrderID })</span>
 

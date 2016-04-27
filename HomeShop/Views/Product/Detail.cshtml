@@ -27,7 +27,7 @@
                 <div class="thumbnail">
                     <img class="img-responsive" src="@Model.ImageLocation" alt="">
                     <div class="caption-full">
-                        <h4 class="pull-right">@Model.Price</h4>
+                        <h4 class="pull-right">@string.Format("{0:C2}", (decimal)(Model.Price))</h4>
                         <br />
                         <br />
                         <p>@Model.ProductDesc</p> 

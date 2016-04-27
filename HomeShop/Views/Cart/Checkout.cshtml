@@ -41,7 +41,7 @@
 
                     <span class="itemName">Total:</span>
 
-                    <span class="price">@Model.TotalCost</span> 
+                    <span class="price">@string.Format("{0:C2}", (decimal)(Model.TotalCost))</span> 
                 </li>
 
                 <li class="row list-inline columnCaptions">
