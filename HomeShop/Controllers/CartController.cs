@@ -19,10 +19,10 @@ namespace HomeShop.Controllers
 
         public ActionResult ShoppingCart()
         {
-            if (TempData["orderid"] == null)
+            if (Session["orderid"] == null)
             {
                 CustomerOrder order = GenerateNewOrder();
-                TempData["orderid"] = order.OrderID;
+                Session["orderid"] = order.OrderID;
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -30,7 +30,7 @@ namespace HomeShop.Controllers
                 ShoppingCartViewModel model = new ShoppingCartViewModel();
                 decimal? total = 0;
 
-                int id = (int)(TempData["orderid"]);
+                int id = (int)(Session["orderid"]);
 
                 var items = db.ShoppingCartItems.Where(i => i.OrderID == id);
                 model.CartItems = items.ToList();
@@ -40,7 +40,7 @@ namespace HomeShop.Controllers
                 }
 
                 model.TotalCost = total;
-                model.OrderID = (int)(TempData["orderid"]);
+                model.OrderID = (int)(Session["orderid"]);
 
                 return View(model);
             }
@@ -48,7 +48,7 @@ namespace HomeShop.Controllers
 
         public ActionResult Checkout(int id)
         {
-            TempData["orderid"] = id;
+            Session["orderid"] = id;
             var items = db.ShoppingCartItems.Where(i => i.OrderID == id);
 
             decimal? totalCost = 0;
@@ -75,7 +75,7 @@ namespace HomeShop.Controllers
             decimal? newTotalCost = 0;
             decimal? shippingCost = 0;
 
-            int? id = (int)(TempData["orderid"]);
+            int? id = (int)(Session["orderid"]);
 
             ShippingType shippingType = db.ShippingTypes.Find(model.ShippingID);
 
@@ -91,6 +91,8 @@ namespace HomeShop.Controllers
 
             db.Entry(order).State = EntityState.Modified;
             db.SaveChanges();
+
+            Session.Remove("orderid");
 
             return View("PaymentSuccessful");
         }
@@ -126,7 +128,7 @@ namespace HomeShop.Controllers
             ShoppingCartItem cartItem = new ShoppingCartItem();
             bool success = false;
             product = db.Products.Find(productID);
-            if (TempData["orderid"] == null)
+            if (Session["orderid"] == null)
             {
                 int OrderID = GenerateNewOrder().OrderID;
 
@@ -138,11 +140,11 @@ namespace HomeShop.Controllers
                 db.ShoppingCartItems.Add(cartItem);
                 db.SaveChanges();
                 success = true;
-                TempData["orderid"] = OrderID;
+                Session["orderid"] = OrderID;
             }
             else
             {
-                cartItem.OrderID = (int)(TempData["orderid"]);
+                cartItem.OrderID = (int)(Session["orderid"]);
                 cartItem.ProductID = product.ProductID;
                 cartItem.Quantity = quantity;
                 cartItem.Price = product.Price * quantity;
