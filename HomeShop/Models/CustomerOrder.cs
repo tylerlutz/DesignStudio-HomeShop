@@ -23,7 +23,7 @@ namespace HomeShop.Models
         public int OrderID { get; set; }
         public string CustomerID { get; set; }
 
-        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public Nullable<decimal> TotalCost { get; set; }
         public Nullable<int> ShippingID { get; set; }
         public string TransactionID { get; set; }

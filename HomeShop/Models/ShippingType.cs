@@ -23,7 +23,7 @@ namespace HomeShop.Models
         public int ShippingID { get; set; }
         public string ShippingName { get; set; }
 
-        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public Nullable<decimal> ShippingCost { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

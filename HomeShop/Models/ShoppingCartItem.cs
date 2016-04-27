@@ -19,7 +19,7 @@ namespace HomeShop.Models
         public Nullable<int> ProductID { get; set; }
         public Nullable<int> Quantity { get; set; }
 
-        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         public Nullable<decimal> Price { get; set; }
     
         public virtual CustomerOrder CustomerOrder { get; set; }
