@@ -13,8 +13,6 @@
 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" />
-
 <link rel="stylesheet" type="text/css" href="~/Content/ShoppingCart.css" />
 
 <script src="https://checkout.stripe.com/checkout.js"></script>
@@ -38,19 +36,19 @@
         <div class="col-md-7 col-sm-12 text-left">
 
             <ul>
-                <li class="row list-inline columnCaptions">
-                    @Html.DropDownList("ShippingID", null, htmlAttributes: new { @class = "form-control", @id = "shippingType" })
-                </li>
 
                 <li class="row totals">
 
                     <span class="itemName">Total:</span>
 
-                    <span class="price">@Model.TotalCost</span>
-
-                    <button class="btn btn-primary" id="stripeButton">Payment</button>
-
+                    <span class="price">@Model.TotalCost</span> 
                 </li>
+
+                <li class="row list-inline columnCaptions">
+                    @Html.DropDownList("ShippingID", null, htmlAttributes: new { @class = "form-control", @id = "shippingType" })
+                </li>
+
+                  <li>  <button class="btn btn-primary" id="stripeButton">Payment</button></li>
 
             </ul>
 
