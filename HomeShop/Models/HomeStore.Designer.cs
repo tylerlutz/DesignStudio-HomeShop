@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Tyler.LUTZ\Documents\GitHub\Websites\HomeShop\HomeShop\Models\HomeStore.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\JT\Source\Repos\DesignStudio-HomeShop2\HomeShop\Models\HomeStore.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
