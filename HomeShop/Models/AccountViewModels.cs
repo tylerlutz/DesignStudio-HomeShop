@@ -82,6 +82,27 @@ namespace HomeShop.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
 
+        [Required]       
+        [Display(Name = "Street Address")]
+        public string StreetAddress { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        public string City { get; set; }
+
+
+        [Required]
+        [MaxLength(2)]
+        [Display(Name = "State")]
+        public string State { get; set; }
+
+        [Required]
+        [MaxLength(5)]
+        [Display(Name = "ZipCode")]
+        public string ZipCode { get; set; }
+
+
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
