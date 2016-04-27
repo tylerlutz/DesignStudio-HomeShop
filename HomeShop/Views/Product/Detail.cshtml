@@ -28,8 +28,7 @@
                     <img class="img-responsive" src="@Model.ImageLocation" alt="">
                     <div class="caption-full">
                         <h4 class="pull-right">@Model.Price</h4>
-                        <h4>
-                        </h4>
+                        <p>@Model.ProductDesc</p> 
                     </div>
                     <div class="ratings">
                         @Html.ActionLink("Add to Cart","AddItem","Cart",new { productID = Model.ProductID, quantity = 1}, new { @class = "btn btn-success"})
