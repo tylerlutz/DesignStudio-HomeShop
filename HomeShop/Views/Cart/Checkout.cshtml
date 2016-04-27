@@ -46,7 +46,7 @@
 
                     <span class="itemName">Total:</span>
 
-                    <span class="price">@Model.TotalCost</span>
+                    <span class="price">@string.Format("{0:C2}", (decimal)(Model.TotalCost))</span>
 
                     <button class="btn btn-primary" id="stripeButton">Payment</button>
 
