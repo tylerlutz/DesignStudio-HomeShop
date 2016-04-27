@@ -10,6 +10,7 @@
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+        <a href="@Url.Action("ShoppingCart", "Cart")"><i class="glyphicon glyphicon-shopping-cart"></i><span class="sr-only">login</span></a>
     </ul>
     }
 }
@@ -23,8 +24,6 @@ else
     <ul class="nav navbar-nav navbar-right">
         <li>@Html.ActionLink("register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-        
-        <a href="@Url.Action("ShoppingCart", "Cart")"><i class="glyphicon glyphicon-shopping-cart"></i><span class="sr-only">login</span></a>
     </ul>
 
 }
